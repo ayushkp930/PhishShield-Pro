@@ -8,15 +8,21 @@ PhishShield Pro is an advanced, terminal-based threat detection tool designed fo
 
 ## 📊 Project Previews
 
-### Startup & Health Dashboard
-![Startup Dashboard](tool_screenshots/01_Startup_Health_Dashboard.png.png)
+### 1. Startup & Health Dashboard
+![Startup Dashboard](tool_screenshots/01_Startup_Health_Dashboard.png)
 *Initial API health checks, environment validation, and system readiness.*
 
-### Executive Threat Report Generation
-![Executive Report](tool_screenshots/03_Executive_Threat_Report.png.png)
+### 2. Email Header Analysis
+![Email Header Analysis](tool_screenshots/02_Email_Header_Analysis.png)
+*Deep inspection of email headers to detect spoofing and malicious origins.*
+
+### 3. Executive Threat Report Generation
+![Executive Report](tool_screenshots/03_Executive_Threat_Report.png)
 *Automated generation of PDF and TXT reports with AI-driven contextual reasoning.*
 
-*(Note: Additional screenshots like Email Header Analysis and Export Options can be found in the `tool_screenshots` directory).*
+### 4. Reporting Export Options
+![Export Options](tool_screenshots/04_Reporting_Export_Options.png)
+*Flexible output options for compliance, record-keeping, and SOC ticketing systems.*
 
 ---
 
@@ -44,77 +50,101 @@ PhishShield Pro is an advanced, terminal-based threat detection tool designed fo
 
 ### Prerequisites
 - Python 3.10 or higher
-- Valid API keys for AI models and supported Threat Intel providers.
+- Valid API keys for AI models and supported threat intel providers
 
 ### Step-by-Step Guide
 
-1. **Clone the Repository:**
-   ```bash
-  [ git clone <your-repo-url>
-   cd PhishShield-Pro](https://github.com/ayushkp930/PhishShield-Pro.git)
+1. **Clone the repository:**
 
-2. **Set Up Virtual Environment:**
- python -m venv .venv
+```bash
+git clone https://github.com/ayushkp930/PhishShield-Pro.git
+cd PhishShield-Pro
+```
+
+2. **Set up virtual environment:**
+
+```bash
+python -m venv .venv
 # On Windows:
 .\.venv\Scripts\Activate.ps1
 # On Linux/Mac:
 source .venv/bin/activate
+```
 
-3. **Install Dependencies:**
-   pip install -r requirements.txt
+3. **Install dependencies:**
 
-4. Extract Offline Datasets (Crucial Step):
-Extract the provided zip files into the root directory of the project to enable offline fallback analysis.
+```bash
+pip install -r requirements.txt
+```
 
-Unzip email_datasets.zip -> email_datasets.csv
+4. **Extract offline datasets (crucial step):**
+- Unzip `email_datasets.zip` into `email_datasets.csv`
+- Unzip `phishing_site_urls.zip` into `phishing_site_urls.csv`
 
-Unzip phishing_site_urls.zip -> phishing_site_urls.csv
+5. **Configure environment variables:**
 
-5. **Configure Environment Variables:**
-   copy .env.example .env
-   # Edit the .env file and securely add your API keys. Never commit this file.
+```bash
+copy .env.example .env
+```
 
-**User Manual (Usage Guide)**
-Launch the interactive CLI dashboard using the provided batch script or Python directly:
+Edit `.env` and securely add your API keys. Never commit this file to GitHub.
 
-**Method 1: Quick Start (Windows)**
+---
+
+## 📖 User Manual (Usage Guide)
+
+Launch the interactive CLI dashboard using the batch script or Python directly.
+
+### Method 1: Quick Start (Windows)
+
+```bash
 .\start_phishshield.bat
-**Method 2: Manual Python Execution**
+```
+
+### Method 2: Manual Python Execution
+
+```bash
 python detector.py
+```
 
-**Navigating the Tool:**
-1. Select Input Type: Choose whether you are scanning a URL, Domain, or analyzing an Email Header.
+### Navigating the Tool
 
-2. Enter Target: Provide the suspect URL or data.
+1. Select input type: URL, Domain, or Email Header.
+2. Enter target data.
+3. Wait for parallel execution across APIs and local CSV datasets.
+4. Review AI verdict and SOC-style reasoning in terminal output.
+5. Export report as PDF or TXT in the output directory.
 
-3. Wait for Parallel Execution: The engine will query APIs and local CSVs simultaneously.
+---
 
-4. Review AI Verdict: Read the generated SOC reasoning directly in the terminal.
+## 🛠️ Troubleshooting (Common Errors)
 
-5. Export Report: Choose to save the findings as a PDF or TXT file in the output directory.
+| Error Message | Cause | Solution |
+| --- | --- | --- |
+| `FileNotFoundError: [Errno 2] No such file or directory: 'phishing_site_urls.csv'` | Dataset still in `.zip` format | Unzip `phishing_site_urls.zip` and `email_datasets.zip` directly into the project root |
+| `API Rate Limit Exceeded (HTTP 429)` | API free-tier quota exhausted | Wait for quota reset or rely on offline CSV fallback mode |
+| `pydantic_core._pydantic_core.ValidationError` | Missing or invalid API keys | Verify `.env` matches `.env.example` and keys are valid |
 
-**Error Message,Cause,Solution**
-FileNotFoundError: [Errno 2] No such file or directory: 'phishing_site_urls.csv',The dataset is still in .zip format.,Unzip phishing_site_urls.zip and email_datasets.zip directly into the project root folder.
-API Rate Limit Exceeded (HTTP 429),You have exhausted the free tier limits of your API providers.,Wait for the quota to reset or rely on the tool's offline CSV fallback mode.
-pydantic_core._pydantic_core.ValidationError,Missing or invalid API keys.,Verify your .env file matches the structure of .env.example and keys are correct.
+---
 
-**💻 Tech Stack**
-Core: Python 3.10+, asyncio, httpx
+## 💻 Tech Stack
 
-CLI UX: colorama
+- **Core:** Python 3.10+, `asyncio`, `httpx`
+- **CLI UX:** `colorama`
+- **Reporting:** `fpdf`
+- **AI Orchestration:** High-performance global LLMs
+- **Threat Intelligence:** Multi-source enterprise reputation API ecosystem and offline datasets
 
-Reporting: fpdf
+---
 
-AI Orchestration: High-Performance Global LLMs
+## 🔒 Security Notes
 
-Threat Intelligence: Multi-source enterprise reputation API ecosystem & offline datasets.
+- Never upload your real `.env` file to public repositories.
+- Use `.env.example` as a template.
+- If you accidentally commit a key, rotate/revoke it immediately via the provider dashboard.
 
-**🔒 Security Notes**
-Never upload your real .env file to public repositories.
+---
 
-Use .env.example as a template.
+## ⚖️ Disclaimer
 
-If you accidentally commit a key, rotate/revoke it immediately via the provider's dashboard.
-
-**⚖️ Disclaimer**
 This tool is provided for educational, research, and defensive security purposes only. Users are solely responsible for complying with all applicable laws, platform terms of service, and organizational policies. The authors assume no liability for misuse, unauthorized scanning activity, or system disruptions.
